@@ -27,6 +27,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar" sourcepath="M2_REPO/org/apache/poi/poi/3.7/poi-3.7-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
@@ -245,11 +246,6 @@
 	<classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.31/mysql-connector-java-5.1.31.jar" sourcepath="M2_REPO/mysql/mysql-connector-java/5.1.31/mysql-connector-java-5.1.31-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
