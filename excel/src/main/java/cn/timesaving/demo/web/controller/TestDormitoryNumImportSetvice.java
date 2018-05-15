@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataValidation;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -432,6 +435,71 @@ public class TestDormitoryNumImportSetvice extends ExcelBatchService {
     public void setFloorName(String floorName) {
       this.floorName = floorName;
     }
+  }
+
+  @Override
+  protected void fillSheetData(Sheet sheet, Map<String, Object> params, StringBuilder resultMsg) {
+    List<Map<Integer, String>> data = (List<Map<Integer, String>>) params.get("data");
+
+    Row row = null;
+    Cell cell = null;
+    Workbook wb = sheet.getWorkbook();
+    CellStyle style = creatStyle(wb, (short) 14, true);
+    CellStyle style2 = creatStyle(wb, (short) 11, false);
+    sheet.setDefaultColumnWidth(25);
+
+    // 创建header
+    Row title = sheet.createRow(0);
+    List<String> headers = (List<String>) params.get("headers");
+    String[] headersArray = headers.toArray(new String[] {});
+    for (int i = 0; i < headersArray.length; i++) {
+      cell = title.createCell(i);
+      cell.setCellStyle(style);
+      cell.setCellValue(headersArray[i]);
+    }
+
+    // 填充内容:map 数字为key, value为具体内容
+    for (int i = 0; i < data.size(); i++) {
+      Map<Integer, String> map = data.get(i);
+      row = sheet.createRow(i + 1);
+      filldata(map, cell, row, style2);
+    }
+
+  }
+
+  private void filldata(Map<Integer, String> map, Cell cell, Row row, CellStyle style2) {
+    for (int j = 0; j < map.size(); j++) {
+      cell = row.createCell(j);
+      cell.setCellStyle(style2);
+      cell.setCellValue(map.get(j));
+    }
+  }
+
+  /**
+   * @param wb
+   *          :工作簿
+   * @param fontsize
+   *          :字体大小
+   * @param isbold
+   *          :是否加粗
+   * 
+   */
+  private CellStyle creatStyle(Workbook wb, short fontsize, boolean isbold) {
+    CellStyle style = wb.createCellStyle(); // 样式对象
+    style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);// 垂直
+    style.setAlignment(CellStyle.ALIGN_CENTER);// 水平
+    style.setWrapText(true);// 能否换行
+    style.setBorderTop((short) 1);
+    style.setBorderRight((short) 1);
+    style.setBorderBottom((short) 1);
+    style.setBorderLeft((short) 1);
+    // 设置标题字体格式
+    Font font = wb.createFont();
+    // 设置字体样式
+    font.setFontHeightInPoints(fontsize); // --->设置字体大小
+    font.setFontName("宋体"); // ---》设置字体，是什么类型例如：宋体
+    style.setFont(font); // --->将字体格式加入到style1中
+    return style;
   }
 
 }
